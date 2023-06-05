@@ -1,4 +1,4 @@
-package com.example.coregpt.models.uiModel
+package com.example.coregpt.models.homeScreenModel
 
 import androidx.annotation.ColorRes
 import androidx.annotation.DrawableRes

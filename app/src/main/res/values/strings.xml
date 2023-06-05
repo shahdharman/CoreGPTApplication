@@ -12,6 +12,48 @@
     <string name="coreGPTDesc">Ask Your Doubts to CoreGPT AI BOT</string>
     <string name="chatDesc">Revise Your doubts askt to CoreGPT BOT</string>
 
+    <string name="TopInterviewSceen">Top Interview Ques &amp; Ans</string>
+    <string name="Practice">Practice More...</string>
+
+
+
+    <!-- Operating System Topic and Description -->
+    <string-array name="osTopic">
+        <item>OPERATING</item>
+        <item>SYSTEM</item>
+    </string-array>
+    <string name="osDesc">"software that manages and controls computer hardware and software resources."</string>
+
+    <!-- DBMS Topic and Description -->
+    <string-array name="dbmsTopic">
+        <item>DATABASE</item>
+        <item>MANAGEMENT</item>
+        <item>SYSTEM</item>
+    </string-array>
+    <string name="dbmsDesc">"software that facilitates the organization, storage, retrieval, and management of data in a database."</string>
+
+    <!-- OOPS Topic and Description -->
+    <string-array name="oopsTopic">
+        <item>OBJECT</item>
+        <item>ORIENTED</item>
+        <item>PROGRAMMING</item>
+        <item>SYSTEM</item>
+    </string-array>
+    <string name="oopsDesc">"paradigm that emphasizes the use of objects and classes to structure code."</string>
+
+    <!-- Computer Networking Topic and Description -->
+    <string-array name="cnTopic">
+        <item>COMPUTER</item>
+        <item>NETWORKING</item>
+    </string-array>
+    <string name="cnDesc">"involves the interconnection of computers and other devices to enable communication and data sharing over a network."</string>
+
+
+
+    <!--Operating System-->
+    <string name="osQues01">What is Operating System and its basic functions?</string>
+    <string name="osQues02">What are the different types of Operating System?</string>
+
 
 
 
