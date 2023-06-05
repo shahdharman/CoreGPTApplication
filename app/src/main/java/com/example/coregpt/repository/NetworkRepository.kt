@@ -18,17 +18,5 @@ class NetworkRepository @Inject constructor(
         return openAIApi.generateResponse(requestBody)
     }
 
-    @Provides
-    @Singleton
-    fun provideRepository(openAIApi: OpenAIApi): NetworkRepository {
-        return NetworkRepository(openAIApi)
-    }
 
-    @Provides
-    fun provideChatViewModel(
-        repository: NetworkRepository,
-        @ApplicationContext context: Context
-    ): CoreGPTViewModel {
-        return CoreGPTViewModel(repository, context)
-    }
 }
