@@ -13,7 +13,7 @@ data class HomeScreenModel(
     @StringRes val description : Int
 )
 
-fun getTopicList():List<HomeScreenModel>{
+fun getHomeScreenList():List<HomeScreenModel>{
     return listOf(
         HomeScreenModel(
             id = 1,

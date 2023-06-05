@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -18,7 +17,6 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.outlined.Menu
 import androidx.compose.material3.Divider
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -39,19 +37,18 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontFamily
-import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.coregpt.models.uiModel.HomeScreenModel
-import com.example.coregpt.models.uiModel.getTopicList
+import com.example.coregpt.models.uiModel.getHomeScreenList
 
 @Preview
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun HomeScreen(homeItemList : List<HomeScreenModel> = getTopicList()) {
+fun HomeScreen(homeItemList : List<HomeScreenModel> = getHomeScreenList()) {
     Scaffold(
         topBar = {
             TopAppBar(
@@ -74,12 +71,13 @@ fun HomeScreen(homeItemList : List<HomeScreenModel> = getTopicList()) {
                         )
                     }
                 },
-                colors = TopAppBarDefaults.smallTopAppBarColors(Color.Black)
+                colors = TopAppBarDefaults.smallTopAppBarColors(containerColor = Color.Black)
             )
         }
     ) {
 
-        Column(modifier = Modifier.padding(it))
+        Column(modifier = Modifier.padding(it)
+            .background(Color.Black))
         {
 
             LazyColumn{
@@ -98,7 +96,7 @@ fun HomeScreen(homeItemList : List<HomeScreenModel> = getTopicList()) {
 @Preview
 @Composable
 fun HomeScreenCard(
-    homeScreenModel: HomeScreenModel = getTopicList()[0],
+    homeScreenModel: HomeScreenModel = getHomeScreenList()[0],
     onHomeItemClicked: (Int) -> Unit = {}
 ) {
     Box(modifier = Modifier
