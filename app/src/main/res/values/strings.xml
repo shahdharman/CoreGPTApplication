@@ -1,3 +1,19 @@
 <resources>
     <string name="app_name">CoreGPT</string>
+    <string name="topQnA">Top Interview Ques &amp; Ans</string>
+    <string name="myNotes">My Personal Notes</string>
+    <string name="coreGPT">ChatBot : Ask Your Doubt</string>
+    <string name="chat">My Doubts</string>
+
+    //HomeScreen Item Descriptions
+
+    <string name="topQnaDesc">Practice Top Core Subjects Questions and Answers For Interview</string>
+    <string name="myNotesDesc">Save your own Question and Answers, Permanently</string>
+    <string name="coreGPTDesc">Ask Your Doubts to CoreGPT AI BOT</string>
+    <string name="chatDesc">Revise Your doubts askt to CoreGPT BOT</string>
+
+
+
+
+
 </resources>

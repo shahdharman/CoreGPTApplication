@@ -1,0 +1,35 @@
+[33mcommit 8e7cfd2db7529086ea0ae2523e0ec8ddbdf33139[m[33m ([m[1;36mHEAD -> [m[1;32mchatgpt[m[33m)[m
+Author: shivam-uttam <shivamuttam1010@gmail.com>
+Date:   Mon Jun 5 16:38:08 2023 +0530
+
+    chat gpt is done
+
+[33mcommit 65ce6af9988288a39f15d26fca244ba09312a219[m
+Author: shivam-uttam <shivamuttam1010@gmail.com>
+Date:   Mon Jun 5 16:35:46 2023 +0530
+
+    Chat Screen and Room db is implemented or storing chat of chatgpt
+
+[33mcommit 74e4cb6fe71da0b43e222e91c9684bc2ddf79b96[m
+Author: shivam-uttam <shivamuttam1010@gmail.com>
+Date:   Mon Jun 5 13:39:44 2023 +0530
+
+    Network Part is done Viewmodel and Repository file is done/ UI part is pending (ChatScreen)
+
+[33mcommit 31a0c4f3339aaf55f41645cc871f455a024ea1d4[m
+Author: shivam-uttam <shivamuttam1010@gmail.com>
+Date:   Mon Jun 5 13:18:45 2023 +0530
+
+    Open AI Response is Building
+
+[33mcommit 1cb44ba39480de53bdc20cfb0f29331e9cdaf53a[m[33m ([m[1;32mstarter[m[33m, [m[1;32mmaster[m[33m)[m
+Author: shivam-uttam <shivamuttam1010@gmail.com>
+Date:   Mon Jun 5 12:59:41 2023 +0530
+
+    Intial Commit with all dependency
+
+[33mcommit 85494e2ff501fe73b93eaaec93b171756896a02f[m
+Author: shivam-uttam <shivamuttam1010@gmail.com>
+Date:   Mon Jun 5 10:11:28 2023 +0530
+
+    Initial Commit (Required Dependency are added for Project)
