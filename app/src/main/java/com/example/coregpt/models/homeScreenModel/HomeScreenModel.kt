@@ -23,14 +23,14 @@ fun getHomeScreenList():List<HomeScreenModel>{
             description = R.string.topQnaDesc
         ),
         HomeScreenModel(
-            id = 3,
+            id = 2,
             title = R.string.myNotes,
             color = R.color.dbmsColor,
             image = R.drawable.mynotes,
             description = R.string.myNotesDesc
         ),
         HomeScreenModel(
-            id = 2,
+            id = 3,
             title = R.string.coreGPT,
             color = R.color.oopscolor,
             image = R.drawable.bot2,
@@ -38,7 +38,7 @@ fun getHomeScreenList():List<HomeScreenModel>{
         ),
         HomeScreenModel(
             id = 4,
-            title = R.string.chat,
+            title = R.string.doubt,
             color = R.color.cnColor,
             image = R.drawable.chat,
             description = R.string.chatDesc

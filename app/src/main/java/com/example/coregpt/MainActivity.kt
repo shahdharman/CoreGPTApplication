@@ -14,6 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.ViewModelProvider
+import com.example.coregpt.navigation.StarApp
 import com.example.coregpt.screens.chatScreen.ChatScreen
 import com.example.coregpt.ui.theme.CoreGPTTheme
 import com.example.coregpt.viewmodel.CoreGPTViewModel
@@ -30,24 +31,13 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    val chatViewModel = ViewModelProvider(this).get(CoreGPTViewModel::class.java) // For fragment
 
-                    ChatScreen(chatViewModel)
+                    val coreViewModel = ViewModelProvider(this).get(CoreGPTViewModel::class.java) // For fragment
+
+                    StarApp(coreViewModel)
                 }
             }
         }
     }
-}
-
-
-
-
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-    Log.d("Network","Everything is fine")
 }
 

@@ -43,50 +43,26 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import com.example.coregpt.R
 import com.example.coregpt.models.topicModel.TopicDataModel
 import com.example.coregpt.models.topicModel.getTopicList
+import com.example.coregpt.util.uiUtil.MyTopAppBar
 
-@Preview
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun TopicScreen(topicList: List<TopicDataModel> = getTopicList())
+fun TopicScreen(navController: NavController)
 {
+    val topicList: List<TopicDataModel> = getTopicList()
     Scaffold(
         containerColor = Color.Transparent,
         topBar = {
-            TopAppBar(
-                title = {
-                    Text(text = stringResource(id = R.string.TopInterviewSceen))
-                },
-                modifier = Modifier.padding(horizontal = 10.dp, vertical = 5.dp),
-                navigationIcon = {
-                    IconButton(
-                        onClick = { /*TODO*/ },
-                        modifier = Modifier
-                            .clip(shape = RoundedCornerShape(25.dp))
-                            .background(Color.Black)
-                    ) {
-                        Icon(
-                            imageVector = Icons.Default.Menu,
-                            contentDescription = "Menu Icon",
-                            tint = Color.White
-                        )
+            MyTopAppBar(screenName = R.string.topQnA)
+            /* TODO
+            MODIFY MORE TOPAPP BAR
+            * */
 
-                    }
-
-                },
-                colors = TopAppBarDefaults.mediumTopAppBarColors(Color.Transparent)
-            )
-        },
-        floatingActionButton = {
-            FloatingActionButton(onClick = { /*TODO*/ })
-            {
-                Icon(
-                    imageVector = Icons.Filled.Search,
-                    contentDescription = "GptSearch"
-                )
-            }
         }
     )
     { innerPadding ->
@@ -97,16 +73,6 @@ fun TopicScreen(topicList: List<TopicDataModel> = getTopicList())
                 .background(Color.Black)
         )
         {
-//            Text(
-//                text = stringResource(id = R.string.TopInterviewSceen),
-//                color = Color.Black,
-//                fontWeight = FontWeight.Bold,
-//                fontSize = 30.sp,
-//                fontFamily = FontFamily.Serif,
-//                modifier = Modifier
-//                    .padding(bottom = 20.dp, start = 24.dp)
-//                    .align(Alignment.CenterHorizontally)
-//            )
 
             LazyColumn(
                 modifier = Modifier
@@ -116,7 +82,12 @@ fun TopicScreen(topicList: List<TopicDataModel> = getTopicList())
             ) {
                 items(topicList){topic->
 
-                    TopicCardItem(topic)
+                    TopicCardItem(topic){
+                        /*
+                       TODO
+                       NAVCONTROLLER PART
+                       * */
+                    }
 
 
                 }

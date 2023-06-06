@@ -1,9 +1,11 @@
 <resources>
+
+    //Screens Name
     <string name="app_name">CoreGPT</string>
     <string name="topQnA">Top Interview Ques &amp; Ans</string>
     <string name="myNotes">My Personal Notes</string>
-    <string name="coreGPT">ChatBot : Ask Your Doubt</string>
-    <string name="chat">My Doubts</string>
+    <string name="coreGPT">ChatBot : Ask Me</string>
+    <string name="doubt">My Doubts</string>
 
     //HomeScreen Item Descriptions
 

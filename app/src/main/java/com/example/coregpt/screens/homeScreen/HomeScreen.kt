@@ -41,20 +41,23 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
+import com.example.coregpt.R
 import com.example.coregpt.models.homeScreenModel.HomeScreenModel
 import com.example.coregpt.models.homeScreenModel.getHomeScreenList
+import com.example.coregpt.navigation.NavigationScreen
 
-@Preview
+//@Preview
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun HomeScreen(homeItemList : List<HomeScreenModel> = getHomeScreenList()) {
+fun HomeScreen(navController: NavController,homeItemList : List<HomeScreenModel> = getHomeScreenList()) {
     Scaffold(
         topBar = {
             TopAppBar(
                 title = {
                     Text(
-                        text = "CoreGPT",
+                        text = stringResource(id = R.string.app_name),
                         fontWeight = FontWeight.Bold,
                         fontFamily = FontFamily.Monospace,
                         color = Color.White
@@ -74,16 +77,37 @@ fun HomeScreen(homeItemList : List<HomeScreenModel> = getHomeScreenList()) {
                 colors = TopAppBarDefaults.smallTopAppBarColors(containerColor = Color.Black)
             )
         }
-    ) {
+    ) { innerPadding ->
 
-        Column(modifier = Modifier.padding(it)
+        Column(modifier = Modifier
+            .padding(innerPadding)
             .background(Color.Black))
         {
 
             LazyColumn{
                 items(homeItemList)
-                {
-                    HomeScreenCard(it)
+                {homeCard->
+                    HomeScreenCard(homeCard)
+                    {
+                        when(homeCard.id)
+                        {
+                            1->{
+                                navController.navigate(route = NavigationScreen.TopQnA.route)
+                            }
+                            2->{
+                                navController.navigate(route = NavigationScreen.NoteScreen.route)
+                            }
+                            3->{
+                                navController.navigate(route = NavigationScreen.CoreGPT.route)
+                            }
+                            4->{
+                                navController.navigate(route = NavigationScreen.DoubtScreen.route)
+                            }
+                            else->{
+
+                            }
+                        }
+                    }
                 }
             }
         }
@@ -93,7 +117,7 @@ fun HomeScreen(homeItemList : List<HomeScreenModel> = getHomeScreenList()) {
     }
 }
 
-@Preview
+//@Preview
 @Composable
 fun HomeScreenCard(
     homeScreenModel: HomeScreenModel = getHomeScreenList()[0],
@@ -106,6 +130,7 @@ fun HomeScreenCard(
         .clip(shape = RoundedCornerShape(30.dp))
         .background(colorResource(id = homeScreenModel.color))
         .clickable {
+            onHomeItemClicked(homeScreenModel.id)
 
         }
     ) {
