@@ -55,7 +55,6 @@ class CoreGPTViewModel @Inject constructor(
                         databaseRepository.insertChat(chatEntity)
                     }
 
-
                 } catch (e: Exception) {
                     val errorMessage = "Something went wrong while fetching response"
                     showToast(errorMessage)
@@ -68,7 +67,7 @@ class CoreGPTViewModel @Inject constructor(
 
     }
 
-    fun showToast(message: String) {
+    private fun showToast(message: String) {
         // Show toast message here
         // Replace `context` with your actual context reference
         Toast.makeText(context, message, Toast.LENGTH_SHORT).show()

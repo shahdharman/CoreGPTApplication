@@ -47,6 +47,7 @@ import androidx.navigation.NavController
 import com.example.coregpt.R
 import com.example.coregpt.models.topicModel.TopicDataModel
 import com.example.coregpt.models.topicModel.getTopicList
+import com.example.coregpt.navigation.NavigationScreen
 import com.example.coregpt.util.uiUtil.MyTopAppBar
 
 
@@ -83,10 +84,8 @@ fun TopicScreen(navController: NavController)
                 items(topicList){topic->
 
                     TopicCardItem(topic){
-                        /*
-                       TODO
-                       NAVCONTROLLER PART
-                       * */
+
+                        navController.navigate(route = NavigationScreen.QuestionScreen.withArgs(topic.id))
                     }
 
 

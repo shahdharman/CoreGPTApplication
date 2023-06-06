@@ -45,13 +45,13 @@ import com.example.coregpt.models.quesScreenModel.cnQA
 import com.example.coregpt.models.quesScreenModel.dbmsOA
 import com.example.coregpt.models.quesScreenModel.oopsQA
 import com.example.coregpt.models.quesScreenModel.osQA
+import com.example.coregpt.navigation.NavigationScreen
 
 
-@Preview(showSystemUi = true)
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun QuestionScreen(id: Int? =1 ) {
+fun QuestionScreen(navController: NavController,id: Int? =1 ) {
 
     lateinit var titleList: Array<String>
 
@@ -135,15 +135,6 @@ fun QuestionScreen(id: Int? =1 ) {
                 },
                 colors = TopAppBarDefaults.mediumTopAppBarColors(Color.Transparent)
             )
-        },
-        floatingActionButton = {
-            FloatingActionButton(onClick = { /*TODO*/ })
-            {
-                Icon(
-                    imageVector = Icons.Filled.Search,
-                    contentDescription = "GptSearch"
-                )
-            }
         }
     ) {
         Surface(
@@ -158,6 +149,7 @@ fun QuestionScreen(id: Int? =1 ) {
 
               items(quesList){ques->
                   QuestionItem(ques = ques){
+                      navController.navigate(route = NavigationScreen.AnswerScreen.withArgs(ques.ansId))
 
                   }
               }
