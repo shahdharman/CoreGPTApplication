@@ -71,7 +71,7 @@ fun StarApp(coreGPTViewModel: CoreGPTViewModel) {
 //Doubt Screen
         composable(route = NavigationScreen.DoubtScreen.route)
         {
-            DoubtScreen()
+            DoubtScreen(coreGPTViewModel = coreGPTViewModel)
         }
 
 
