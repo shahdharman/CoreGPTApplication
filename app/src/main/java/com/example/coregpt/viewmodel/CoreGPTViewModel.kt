@@ -7,6 +7,7 @@ import androidx.compose.runtime.mutableStateListOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.coregpt.database.ChatMessage
+import com.example.coregpt.database.MyNote
 import com.example.coregpt.models.networkModel.Message
 import com.example.coregpt.models.networkModel.OpenAIRequestBody
 import com.example.coregpt.repository.DatabaseRepository
@@ -14,6 +15,7 @@ import com.example.coregpt.repository.NetworkRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.distinctUntilChanged
@@ -33,6 +35,9 @@ class CoreGPTViewModel @Inject constructor(
 
     private val _doubtList = MutableStateFlow<List<ChatMessage>>(emptyList())
     val doubtList = _doubtList.asStateFlow()
+
+    private val _noteList = MutableStateFlow<List<MyNote>>(emptyList())
+
 
     init {
         viewModelScope.launch(Dispatchers.IO)
@@ -91,6 +96,27 @@ class CoreGPTViewModel @Inject constructor(
         // Show toast message here
         // Replace `context` with your actual context reference
         Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
+    }
+
+    fun getMyNoteByCategory(category: String): StateFlow<List<MyNote>> {
+        viewModelScope.launch(Dispatchers.IO) {
+            databaseRepository.getMyNoteByCategory(category = category).distinctUntilChanged().collect { listofNote ->
+                _noteList.value = listofNote
+            }
+        }
+        return _noteList.asStateFlow()
+    }
+
+    fun insert(myNote: MyNote) = viewModelScope.launch {
+        databaseRepository.insert(myNote)
+    }
+
+    fun update(myNote: MyNote) = viewModelScope.launch {
+        databaseRepository.update(myNote)
+    }
+
+    fun delete(myNote: MyNote) = viewModelScope.launch {
+        databaseRepository.delete(myNote)
     }
 
 
