@@ -2,18 +2,18 @@ package com.example.coregpt.screens.doubtScreens
 
 import android.annotation.SuppressLint
 import android.widget.Toast
-import androidx.annotation.ColorRes
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Delete
-import androidx.compose.material.icons.outlined.Delete
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -23,7 +23,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -34,19 +34,19 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.coregpt.R
 import com.example.coregpt.database.ChatMessage
-import com.example.coregpt.navigation.NavigationScreen
 import com.example.coregpt.util.uiUtil.MyTopAppBar
 import com.example.coregpt.viewmodel.CoreGPTViewModel
-import kotlin.math.exp
 
 @Composable
 fun DoubtScreen(coreGPTViewModel: CoreGPTViewModel) {
+    val doubtList = coreGPTViewModel.doubtList.collectAsState().value
 
-    Text(text = "Doubt Screen")
+    ShowDoubtChat(doubts = doubtList, onRemoveDoubt = {
+        coreGPTViewModel.deleteChat(it)
+    })
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -56,7 +56,36 @@ fun ShowDoubtChat(
     doubts: List<ChatMessage>,
     onRemoveDoubt: (ChatMessage) -> Unit
 ) {
+    Scaffold(
+        topBar = {
+            MyTopAppBar(screenName = R.string.doubt)
+        }
+    )
+    {
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(it),
+            horizontalAlignment = Alignment.CenterHorizontally,
+        )
+        {
+            if (doubts.isNullOrEmpty()) {
+                Box(contentAlignment = Alignment.Center, modifier = Modifier.fillMaxSize())
+                {
+                    Text(text = "There Is No Doubt History...")
+                }
+            } else {
+                LazyColumn {
+                    items(doubts) { doubt ->
+                        DoubtRow(doubt = doubt, onClick = {
+                            onRemoveDoubt(doubt)
+                        })
 
+                    }
+                }
+            }
+        }
+    }
 
 
 }
@@ -89,7 +118,6 @@ fun DoubtRow(
     {
         Column(
             verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally,
             modifier = Modifier.padding(top = 0.dp, bottom = 0.dp, start = 15.dp, end = 15.dp)
         )
         {

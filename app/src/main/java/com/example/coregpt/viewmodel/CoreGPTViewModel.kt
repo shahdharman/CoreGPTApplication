@@ -1,6 +1,7 @@
 package com.example.coregpt.viewmodel
 
 import android.content.Context
+import android.util.Log
 import android.widget.Toast
 import androidx.compose.runtime.mutableStateListOf
 import androidx.lifecycle.ViewModel
@@ -12,6 +13,10 @@ import com.example.coregpt.repository.DatabaseRepository
 import com.example.coregpt.repository.NetworkRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.lang.Exception
@@ -23,9 +28,22 @@ class CoreGPTViewModel @Inject constructor(
     private val networkRepository: NetworkRepository,
     private val databaseRepository: DatabaseRepository,
     private val context: Context
-) : ViewModel()
-{
+) : ViewModel() {
     val messages = mutableStateListOf<Message>()
+
+    private val _doubtList = MutableStateFlow<List<ChatMessage>>(emptyList())
+    val doubtList = _doubtList.asStateFlow()
+
+    init {
+        viewModelScope.launch(Dispatchers.IO)
+        {
+            databaseRepository.getAllChat().distinctUntilChanged().collect() { listOfChat ->
+
+                _doubtList.value = listOfChat
+
+            }
+        }
+    }
 
     fun sendMessage(text: String, isUser: Boolean = true) {
         val message = Message(text, "user")
@@ -51,7 +69,7 @@ class CoreGPTViewModel @Inject constructor(
                         request = message.content,
                         response = generateMessage.content
                     )
-                    withContext(Dispatchers.IO){
+                    withContext(Dispatchers.IO) {
                         databaseRepository.insertChat(chatEntity)
                     }
 
@@ -63,8 +81,10 @@ class CoreGPTViewModel @Inject constructor(
             }
 
         }
+    }
 
-
+    fun deleteChat(chatMessage: ChatMessage) = viewModelScope.launch {
+        databaseRepository.deleteChat(chatMessage)
     }
 
     private fun showToast(message: String) {
