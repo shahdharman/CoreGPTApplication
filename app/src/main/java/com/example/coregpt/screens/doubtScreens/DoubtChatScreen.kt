@@ -146,7 +146,7 @@ fun DoubtRow(
                     Icon(
                         imageVector = Icons.Filled.Delete,
                         contentDescription = "Delete Chat",
-                        tint = Color.Red
+                        tint = Color.DarkGray
                     )
                 }
             }

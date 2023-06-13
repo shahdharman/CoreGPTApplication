@@ -18,18 +18,10 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            CoreGPTTheme {
-                // A surface container using the 'background' color from the theme
-                Surface(
-                    modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colorScheme.background
-                ) {
 
-                    val coreViewModel = ViewModelProvider(this).get(CoreGPTViewModel::class.java) // For fragment
+            val coreViewModel = ViewModelProvider(this).get(CoreGPTViewModel::class.java) // For fragment
 
-                    StarApp(coreViewModel)
-                }
-            }
+            StarApp(coreViewModel)
         }
     }
 }
