@@ -15,9 +15,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
-import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
@@ -35,7 +33,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
@@ -46,6 +43,7 @@ import com.example.coregpt.models.quesScreenModel.dbmsOA
 import com.example.coregpt.models.quesScreenModel.oopsQA
 import com.example.coregpt.models.quesScreenModel.osQA
 import com.example.coregpt.navigation.NavigationScreen
+import com.example.coregpt.util.uiUtil.MyTopAppBar
 
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
@@ -53,88 +51,47 @@ import com.example.coregpt.navigation.NavigationScreen
 @Composable
 fun QuestionScreen(navController: NavController,id: Int? =1 ) {
 
-    lateinit var titleList: Array<String>
+    var title: Int
 
     val quesList: List<QuesDataModel> = when (id) {
         1 -> {
-            Log.d("operatingSystem", "$id")
-            titleList = stringArrayResource(R.array.osTopic)
+//            Log.d("operatingSystem", "$id")
+            title = R.string.QuesOSTopic
             osQA()
         }
 
         2 -> {
-            Log.d("oops", "$id")
-            titleList = stringArrayResource(id = R.array.oopsTopic)
+//            Log.d("oops", "$id")
+            title = R.string.QuesOOPSTopic
             oopsQA()
         }
 
         3 -> {
-            Log.d("dbms", "$id")
-            titleList = stringArrayResource(id = R.array.dbmsTopic)
+//            Log.d("dbms", "$id")
+            title = R.string.QuesDBMSTopic
             dbmsOA()
         }
 
         4 -> {
-            Log.d("network", "$id")
-            titleList = stringArrayResource(id = R.array.cnTopic)
+//            Log.d("network", "$id")
+            title = R.string.QuesCNTopic
             cnQA()
         }
 
         else -> {
-            /* TODO */
-            Log.d("else", "$id")
-            titleList = stringArrayResource(id = R.array.osTopic)
+
+            title = R.string.QuesOSTopic
             osQA()
         }
     }
 
-    val stringBuilder = StringBuilder()
-
-    for (i in titleList.indices) {
-        stringBuilder.append(titleList[i])
-
-        if (i < titleList.size - 1) {
-            stringBuilder.append(" ")
-        }
-    }
-
-    val title = stringBuilder.toString()
-
-
-
     Scaffold(
         containerColor = Color.Transparent,
         topBar = {
-            TopAppBar(
-                title = {
-                    Text(
-                        text = title,
-                        fontFamily = FontFamily.Serif,
-                        fontSize = 19.sp,
-                        fontWeight = FontWeight.Bold,
-                        textAlign = TextAlign.Center
-                    )
-                },
-                modifier = Modifier.padding(horizontal = 10.dp, vertical = 5.dp),
-                navigationIcon = {
-                    IconButton(
-                        onClick = { /*TODO*/ },
-                        modifier = Modifier
-                            .clip(shape = RoundedCornerShape(15.dp))
-                            .background(Color.Black)
-                            .size(35.dp)
-                    ) {
-                        Icon(
-                            imageVector = Icons.Default.ArrowBack,
-                            contentDescription = "Back Icon",
-                            tint = Color.White
-                        )
+            MyTopAppBar(screenName = title, icon = Icons.Default.ArrowBack, color = Color.Black ) {
+                navController.popBackStack()
+            }
 
-                    }
-
-                },
-                colors = TopAppBarDefaults.mediumTopAppBarColors(Color.Transparent)
-            )
         }
     ) {
         Surface(
@@ -172,7 +129,7 @@ fun QuestionItem(
     Surface(
         modifier = modifier
             .fillMaxWidth()
-            .padding(start = 20.dp, top = 5.dp, bottom = 5.dp, end = 20.dp)
+            .padding(start = 10.dp, top = 5.dp, bottom = 5.dp, end = 10.dp)
             .clickable {
                 onQuesClick(ques.ansId)
             },

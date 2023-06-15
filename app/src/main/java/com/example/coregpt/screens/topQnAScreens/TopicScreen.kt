@@ -1,6 +1,5 @@
 package com.example.coregpt.screens.topicScreen
 
-import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -17,21 +16,17 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Menu
-import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.FloatingActionButton
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
-import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
@@ -59,7 +54,10 @@ fun TopicScreen(navController: NavController)
     Scaffold(
         containerColor = Color.Transparent,
         topBar = {
-            MyTopAppBar(screenName = R.string.topQnA)
+            MyTopAppBar(screenName = R.string.topQnA, icon = Icons.Default.ArrowBack, color = Color.Black)
+            {
+                navController.popBackStack()
+            }
             /* TODO
             MODIFY MORE TOPAPP BAR
             * */
@@ -97,15 +95,13 @@ fun TopicScreen(navController: NavController)
 }
 
 
-@Preview
 @Composable
-fun TopicCardItem(topicDataModel: TopicDataModel = getTopicList()[0], onTopicClicked: (Int)->Unit ={})
+fun TopicCardItem(topicDataModel: TopicDataModel, onTopicClicked: (Int)->Unit ={})
 {
-    val titleList = stringArrayResource(id = topicDataModel.title)
     Box(
         modifier = Modifier
-            .padding(start = 7.dp, end = 7.dp, top = 5.dp, bottom = 5.dp)
-            .height(220.dp)
+            .padding(start = 7.dp, end = 7.dp, top = 10.dp, bottom = 5.dp)
+            .height(200.dp)
             .fillMaxWidth()
             .clip(shape = RoundedCornerShape(30.dp))
             .background(colorResource(id = topicDataModel.color))
@@ -115,32 +111,30 @@ fun TopicCardItem(topicDataModel: TopicDataModel = getTopicList()[0], onTopicCli
         ,contentAlignment = Alignment.Center
     ) {
         Row(
-            modifier = Modifier.padding(start = 20.dp),
-//            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.Center
+            modifier = Modifier,
+            horizontalArrangement = Arrangement.Start
         ){
             Column(
                 modifier = Modifier
-                    .width(130.dp)
+                    .width(170.dp)
                     .padding(top = 20.dp)
             ){
-                for(name in titleList)
-                {
+
                     Text(
                         modifier = Modifier.padding(bottom = 5.dp),
-                        text = name,
-                        fontFamily = FontFamily.Serif,
+                        text = stringResource(id = topicDataModel.title),
+                        fontFamily = FontFamily.Monospace,
                         color = Color.Black,
                         fontWeight = FontWeight.Bold
                     )
-                }
+
 
                 Text(
                     text = stringResource(id = topicDataModel.description),
                     textAlign = TextAlign.Left,
-                    fontSize = 13.sp,
-                    fontWeight = FontWeight.Bold,
-                    fontFamily = FontFamily.Cursive,
+                    fontSize = 10.sp,
+                    fontWeight = FontWeight.ExtraLight,
+                    fontFamily = FontFamily.Monospace,
                     color = Color.DarkGray
                 )
 
@@ -159,8 +153,8 @@ fun TopicCardItem(topicDataModel: TopicDataModel = getTopicList()[0], onTopicCli
                 contentDescription = "Topic Image",
                 contentScale = ContentScale.Crop,
                 modifier = Modifier
-                    .height(350.dp)
-                    .width(400.dp)
+                    .height(200.dp)
+                    .width(130.dp)
             )
         }
     }

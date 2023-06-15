@@ -5,51 +5,50 @@
     <string name="topQnA">Top Interview Ques &amp; Ans</string>
     <string name="myNotes">My Personal Notes</string>
     <string name="coreGPT">ChatBot : Ask Me</string>
-    <string name="doubt">My Doubts</string>
+    <string name="doubt">Doubts History</string>
 
     //HomeScreen Item Descriptions
 
-    <string name="topQnaDesc">Practice Top Core Subjects Questions and Answers For Interview</string>
+    <string name="topQnaDesc">-> OOPS\n-> Operating System\n-> Database Management System\n-> Computer Networking</string>
     <string name="myNotesDesc">Save your own Question and Answers, Permanently</string>
     <string name="coreGPTDesc">Ask Your Doubts to CoreGPT AI BOT</string>
-    <string name="chatDesc">Revise Your doubts askt to CoreGPT BOT</string>
+    <string name="chatDesc">Revise Your doubts asked to CoreGPT BOT</string>
 
-    <string name="TopInterviewSceen">Top Interview Ques &amp; Ans</string>
+    <string name="TopInterviewScreen">Top Interview Ques &amp; Ans</string>
     <string name="Practice">Practice More...</string>
 
-
+                <!-- Top Interview Ques and Ans Screen -->
 
     <!-- Operating System Topic and Description -->
-    <string-array name="osTopic">
-        <item>OPERATING</item>
-        <item>SYSTEM</item>
-    </string-array>
+    <string name="osTopic">OPERATING\nSYSTEM</string>
     <string name="osDesc">"software that manages and controls computer hardware and software resources."</string>
 
     <!-- DBMS Topic and Description -->
-    <string-array name="dbmsTopic">
-        <item>DATABASE</item>
-        <item>MANAGEMENT</item>
-        <item>SYSTEM</item>
-    </string-array>
+
+    <string name="dbmsTopic">DATABASE\nMANAGEMENT\nSYSTEM</string>
     <string name="dbmsDesc">"software that facilitates the organization, storage, retrieval, and management of data in a database."</string>
 
     <!-- OOPS Topic and Description -->
-    <string-array name="oopsTopic">
-        <item>OBJECT</item>
-        <item>ORIENTED</item>
-        <item>PROGRAMMING</item>
-        <item>SYSTEM</item>
-    </string-array>
+    <string name="oopsTopic">OBJECT\nORIENTED\nPROGRAMMING\nSYSTEM</string>
     <string name="oopsDesc">"paradigm that emphasizes the use of objects and classes to structure code."</string>
 
     <!-- Computer Networking Topic and Description -->
-    <string-array name="cnTopic">
-        <item>COMPUTER</item>
-        <item>NETWORKING</item>
-    </string-array>
+    <string name="cnTopic">COMPUTER\nNETWORKING</string>
     <string name="cnDesc">"involves the interconnection of computers and other devices to enable communication and data sharing over a network."</string>
 
+
+                <!-- Question Screen TopApp Name -->
+    <string name="QuesOSTopic">OPERATING SYSTEM</string>
+    <string name="QuesDBMSTopic">DATABASE MANAGEMENT SYSTEM</string>
+    <string name="QuesOOPSTopic">OOPS</string>
+    <string name="QuesCNTopic">COMPUTER NETWORKING</string>
+
+    <!-- Answer Screen TopApp Name -->
+    <string name="answerScreen">Answer</string>
+
+    <!-- My Notes Screen TopApp Name -->
+
+    <string name="myNoteScreen">My Notes</string>
 
 
     <!--Operating System-->

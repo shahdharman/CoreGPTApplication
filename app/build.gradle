@@ -108,6 +108,9 @@ dependencies {
     //pdfviewer
     implementation 'io.github.grizzi91:bouquet:1.1.2'
 
+    //Splash Screen
+    implementation 'androidx.core:core-splashscreen:1.0.1'
+
 
 
 }

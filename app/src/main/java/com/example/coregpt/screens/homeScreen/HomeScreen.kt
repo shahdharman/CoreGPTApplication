@@ -51,7 +51,10 @@ import com.example.coregpt.navigation.NavigationScreen
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun HomeScreen(navController: NavController,homeItemList : List<HomeScreenModel> = getHomeScreenList()) {
+fun HomeScreen(
+    navController: NavController,
+    homeItemList: List<HomeScreenModel> = getHomeScreenList()
+) {
     Scaffold(
         topBar = {
             TopAppBar(
@@ -63,47 +66,53 @@ fun HomeScreen(navController: NavController,homeItemList : List<HomeScreenModel>
                         color = Color.White
                     )
                 },
-                navigationIcon = {
-                    IconButton(onClick = { /*TODO*/ })
-                    {
-                        Icon(
-                            imageVector = Icons.Outlined.Menu,
-                            contentDescription = "Main_Menu",
-                            tint = Color.White,
-                            modifier = Modifier.size(35.dp)
-                        )
-                    }
-                },
+//                navigationIcon = {
+//                    IconButton(onClick = { /*TODO*/ })
+//                    {
+//                        Icon(
+//                            imageVector = Icons.Outlined.Menu,
+//                            contentDescription = "Main_Menu",
+//                            tint = Color.White,
+//                            modifier = Modifier.size(35.dp)
+//                        )
+//                    }
+//                },
                 colors = TopAppBarDefaults.smallTopAppBarColors(containerColor = Color.Black)
             )
         }
     ) { innerPadding ->
 
-        Column(modifier = Modifier
-            .padding(innerPadding)
-            .background(Color.Black))
+        Column(
+            modifier = Modifier
+                .padding(innerPadding)
+                .background(Color.Black)
+        )
         {
 
-            LazyColumn{
+            LazyColumn {
                 items(homeItemList)
-                {homeCard->
+                { homeCard ->
                     HomeScreenCard(homeCard)
                     {
-                        when(homeCard.id)
-                        {
-                            1->{
+                        when (homeCard.id) {
+                            1 -> {
                                 navController.navigate(route = NavigationScreen.TopQnA.route)
                             }
-                            2->{
-                                navController.navigate(route = NavigationScreen.NoteScreen.route)
-                            }
-                            3->{
+
+                            2 -> {
                                 navController.navigate(route = NavigationScreen.CoreGPT.route)
                             }
-                            4->{
+
+                            3 -> {
                                 navController.navigate(route = NavigationScreen.DoubtScreen.route)
                             }
-                            else->{
+
+                            4 -> {
+                                navController.navigate(route = NavigationScreen.NoteScreen.route)
+
+                            }
+
+                            else -> {
 
                             }
                         }
@@ -111,7 +120,6 @@ fun HomeScreen(navController: NavController,homeItemList : List<HomeScreenModel>
                 }
             }
         }
-
 
 
     }
@@ -136,7 +144,8 @@ fun HomeScreenCard(
     ) {
         Row(modifier = Modifier.padding(start = 10.dp))
         {
-            Column(verticalArrangement = Arrangement.Center,
+            Column(
+                verticalArrangement = Arrangement.Center,
                 horizontalAlignment = Alignment.CenterHorizontally,
                 modifier = Modifier
                     .width(100.dp)
@@ -153,9 +162,11 @@ fun HomeScreenCard(
 
             }
 
-            Column(modifier = Modifier
-                .padding(top = 15.dp, start = 5.dp, end = 5.dp)
-                .fillMaxWidth())
+            Column(
+                modifier = Modifier
+                    .padding(top = 15.dp, start = 5.dp, end = 5.dp)
+                    .fillMaxWidth()
+            )
             {
                 Text(
                     text = stringResource(id = homeScreenModel.title),
@@ -170,8 +181,8 @@ fun HomeScreenCard(
                     text = stringResource(id = homeScreenModel.description),
                     style = MaterialTheme.typography.bodySmall,
                     textAlign = TextAlign.Justify,
-                    fontFamily = FontFamily.Cursive,
-                    fontWeight = FontWeight.Bold
+                    fontFamily = FontFamily.Monospace,
+                    fontWeight = FontWeight.ExtraLight
                 )
             }
 

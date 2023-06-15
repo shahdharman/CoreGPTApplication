@@ -2,10 +2,14 @@ package com.example.coregpt.screens.mynotesScreens
 
 import android.annotation.SuppressLint
 import android.widget.Toast
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.absoluteOffset
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.heightIn
@@ -16,8 +20,11 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -28,7 +35,7 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -40,21 +47,25 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.DialogProperties
+import com.example.coregpt.R
 import com.example.coregpt.database.MyNote
-import com.example.coregpt.util.uiUtil.provideCategory
-import com.example.coregpt.util.uiUtil.selectCategory
+import com.example.coregpt.util.uiUtil.MyTopAppBar
+import com.example.coregpt.util.uiUtil.SelectCategory
 import com.example.coregpt.viewmodel.CoreGPTViewModel
 
 
 @OptIn(ExperimentalMaterial3Api::class)
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
-fun MyNotesScreen(coreGPTViewModel: CoreGPTViewModel) {
+fun MyNotesScreen(coreGPTViewModel: CoreGPTViewModel, onClick: () -> Unit) {
 
 
     var question by remember {
@@ -81,19 +92,25 @@ fun MyNotesScreen(coreGPTViewModel: CoreGPTViewModel) {
 
     Scaffold(
         topBar = {
-            TopAppBar(
-                title = { Text(text = "My Notes") }
-            )
+            MyTopAppBar(
+                screenName = R.string.myNoteScreen,
+                icon = Icons.Default.ArrowBack,
+                color = Color.Black
+            ) {
+                onClick()
+            }
         },
         floatingActionButton = {
-            IconButton(onClick =
-            {
-                openDialog.value = true
-            })
+            IconButton(
+                onClick = { openDialog.value = true }, modifier = Modifier
+                    .clip(shape = RoundedCornerShape(30.dp))
+                    .background(Color(249, 168, 37, 255))
+                    .size(60.dp)
+            )
             {
                 Icon(
                     imageVector = Icons.Default.Add, contentDescription = "Add Note",
-                    modifier = Modifier.size(50.dp), tint = Color.Red
+                    modifier = Modifier.size(40.dp), tint = Color.Black
                 )
             }
         }
@@ -101,33 +118,44 @@ fun MyNotesScreen(coreGPTViewModel: CoreGPTViewModel) {
         Surface(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(innerPadding)
+                .padding(innerPadding),
+            color = Color.Transparent
         ) {
-            Column() {
-                selectCategory(
+            Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                SelectCategory(
                     selectedOption = selectedOption.value,
                     onOptionSelected = { selectedOption.value = it })
 
-                LazyColumn {
-                    items(myNoteList) { myNote ->
+                if (myNoteList.isEmpty()) {
+                    Text(
+                        text = "No Notes is available...\n\nClick on Add icon to add ",
+                        modifier = Modifier.padding(vertical = 220.dp),
+                        color = Color.Gray,
+                        fontStyle = FontStyle.Italic
+                    )
 
-                        MyNoteRow(myNote = myNote,
-                            onUpdateClicked = {
-                                selectedNote = myNote
-                                question = selectedNote!!.question
-                                answer = selectedNote!!.answer
-                                openDialog.value = true
-                            },
-                            onDeleteClicked = {
-                                coreGPTViewModel.delete(myNote)
-                            })
+                } else {
+                    LazyColumn {
+                        items(myNoteList) { myNote ->
+
+                            MyNoteRow(myNote = myNote,
+                                onUpdateClicked = {
+                                    selectedNote = myNote
+                                    question = selectedNote!!.question
+                                    answer = selectedNote!!.answer
+                                    openDialog.value = true
+                                },
+                                onDeleteClicked = {
+                                    coreGPTViewModel.delete(myNote)
+                                })
 
 
+                        }
                     }
                 }
 
-            }
 
+            }
         }
         if (openDialog.value) {
 
@@ -136,99 +164,128 @@ fun MyNotesScreen(coreGPTViewModel: CoreGPTViewModel) {
                     openDialog.value = false
                 },
                 title = {
-                    Text(text = "Dialog Title")
+                    Text(
+                        text = "Write Your Note:",
+                        fontFamily = FontFamily.Default,
+                        style = MaterialTheme.typography.bodyLarge,
+                        fontWeight = FontWeight.Bold
+                    )
                 },
                 text =
                 {
-                    Surface(
-                        modifier = Modifier.fillMaxSize(),
-                        color = Color.White
-                    ) {
-                        LazyColumn {
-                            item {
-                                Column(
+                    LazyColumn(modifier = Modifier.fillMaxSize()) {
+                        item {
+                            Column(
+                                modifier = Modifier
+                                    .fillMaxSize()
+                                    .padding(start = 15.dp, end = 15.dp, top = 50.dp),
+                                verticalArrangement = Arrangement.spacedBy(20.dp)
+                            )
+                            {
+                                OutlinedTextField(
+                                    value = question, onValueChange = { question = it },
                                     modifier = Modifier
-                                        .fillMaxSize()
-                                        .padding(start = 15.dp, end = 15.dp, top = 50.dp),
-                                    verticalArrangement = Arrangement.spacedBy(20.dp)
+                                        .heightIn(min = 75.dp, max = 150.dp)
+                                        .fillMaxWidth(),
+                                    label = {
+                                        Text(text = "Question")
+                                    },
+                                    placeholder = {
+                                        Text(text = "Type question here...")
+                                    },
+                                    singleLine = false,
+                                    colors = TextFieldDefaults.outlinedTextFieldColors(
+                                        containerColor = Color.White,
+                                        textColor = Color.Black,
+                                        focusedBorderColor = Color(86, 219, 91, 255),
+                                        unfocusedBorderColor = Color.Black
+                                    )
                                 )
-                                {
-                                    OutlinedTextField(
-                                        value = question, onValueChange = { question = it },
-                                        modifier = Modifier
-                                            .heightIn(min = 75.dp, max = 150.dp)
-                                            .fillMaxWidth(),
-                                        label = {
-                                            Text(text = "Question")
-                                        },
-                                        placeholder = {
-                                            Text(text = "Type question here...")
-                                        },
-                                        singleLine = false
+
+                                OutlinedTextField(
+                                    value = answer, onValueChange = { answer = it },
+                                    modifier = Modifier
+                                        .heightIn(min = 100.dp, max = 300.dp)
+                                        .fillMaxWidth(),
+                                    label = {
+                                        Text(text = "Answer")
+                                    },
+                                    placeholder = {
+                                        Text(text = "Type answer here...")
+                                    },
+                                    singleLine = false,
+                                    colors = TextFieldDefaults.outlinedTextFieldColors(
+                                        containerColor = Color.White,
+                                        textColor = Color.Black,
+                                        focusedBorderColor = Color(86, 219, 91, 255),
+                                        unfocusedBorderColor = Color.Black
                                     )
+                                )
 
-                                    OutlinedTextField(
-                                        value = answer, onValueChange = { answer = it },
-                                        modifier = Modifier
-                                            .heightIn(min = 100.dp, max = 300.dp)
-                                            .fillMaxWidth(),
-                                        label = {
-                                            Text(text = "Answer")
-                                        },
-                                        placeholder = {
-                                            Text(text = "Type answer here...")
-                                        },
-                                        singleLine = false
-                                    )
+                                SelectCategory(
+                                    selectedOption = selectedOption.value,
+                                    onOptionSelected = {
+                                        selectedOption.value = it
+                                    })
 
-                                    selectCategory(
-                                        selectedOption = selectedOption.value,
-                                        onOptionSelected = {
-                                            selectedOption.value = it
-                                        })
-
-                                    Text(
-                                        text = "Selected Category: ${provideCategory(category = selectedOption.value)}",
-                                        fontSize = 11.sp,
-                                    )
-
-                                }
                             }
                         }
-
                     }
                 },
                 confirmButton = {
-                    Button(onClick = {
-                        if (question.isNotEmpty() && answer.isNotEmpty()) {
+                    Column(
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                        verticalArrangement = Arrangement.Center,
+                        modifier = Modifier.fillMaxWidth()
+                    ) {
 
-                            if (selectedNote != null) {
-                                selectedNote!!.question = question
-                                selectedNote!!.answer = answer
-                                selectedNote!!.category = selectedOption.value
+                        Button(
+                            onClick = {
+                                if (question.isNotEmpty() && answer.isNotEmpty()) {
 
-                                coreGPTViewModel.update(selectedNote!!)
-                                selectedNote = null
-                                Toast.makeText(context, "Note Updated", Toast.LENGTH_SHORT).show()
+                                    if (selectedNote != null) {
+                                        selectedNote!!.question = question
+                                        selectedNote!!.answer = answer
+                                        selectedNote!!.category = selectedOption.value
 
-                            } else {
-                                val myNote = MyNote(
-                                    question = question,
-                                    answer = answer,
-                                    category = selectedOption.value
-                                )
-                                coreGPTViewModel.insert(myNote)
-                                Toast.makeText(context, "Note Added", Toast.LENGTH_SHORT).show()
-                            }
-                            question = ""
-                            answer = ""
-                            openDialog.value = false
+                                        coreGPTViewModel.update(selectedNote!!)
+                                        selectedNote = null
+                                        Toast.makeText(context, "Note Updated", Toast.LENGTH_SHORT)
+                                            .show()
+
+                                    } else {
+                                        val myNote = MyNote(
+                                            question = question,
+                                            answer = answer,
+                                            category = selectedOption.value
+                                        )
+                                        coreGPTViewModel.insert(myNote)
+                                        Toast.makeText(context, "Note Added", Toast.LENGTH_SHORT)
+                                            .show()
+                                    }
+                                    question = ""
+                                    answer = ""
+                                    openDialog.value = false
+                                } else {
+                                    Toast.makeText(
+                                        context,
+                                        "Text field cannot be empty",
+                                        Toast.LENGTH_SHORT
+                                    ).show()
+                                }
+                            },
+                            colors = ButtonDefaults.buttonColors(
+                                containerColor = Color(249, 168, 37, 255)
+                            ),
+                            elevation = ButtonDefaults.buttonElevation(2.dp),
+                        )
+                        {
+                            Text(text = "Save", color = Color.Black)
                         }
-                    }) {
-                        Text(text = "Save")
                     }
                 },
-
+                containerColor = Color.White,
+                titleContentColor = Color.Black,
                 properties = DialogProperties(
                     dismissOnBackPress = true,
                     dismissOnClickOutside = false
@@ -248,14 +305,23 @@ fun MyNoteRow(
     onUpdateClicked: (MyNote) -> Unit,
     onDeleteClicked: (MyNote) -> Unit
 ) {
+    var expanded by remember {
+        mutableStateOf(false)
+    }
+
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(4.dp)
-            .clip(RoundedCornerShape(topEnd = 33.dp, bottomStart = 33.dp)),
-        elevation = CardDefaults.cardElevation(2.dp)
+            .padding(start = 5.dp, end = 5.dp)
+            .padding(vertical = 10.dp)
+            .clip(RoundedCornerShape(10.dp))
+            .border(0.5.dp, Color.Gray, RoundedCornerShape(10.dp))
+            .clickable { expanded = !expanded },
+        elevation = CardDefaults.cardElevation(2.dp),
+        colors = CardDefaults.cardColors(containerColor = Color(223, 243, 200, 255)),
     )
     {
+
         Column(
             horizontalAlignment = Alignment.Start,
             modifier = Modifier
@@ -266,36 +332,56 @@ fun MyNoteRow(
             Text(
                 text = "Ques: ${myNote.question}",
                 fontWeight = FontWeight.Bold,
-                textAlign = TextAlign.Justify
+                textAlign = TextAlign.Start,
+                fontFamily = FontFamily.Default
             )
 
-            Text(
-                text = "Ans: ${myNote.answer}",
-                fontWeight = FontWeight.Normal,
-                textAlign = TextAlign.Justify
-            )
+            if (expanded) {
+                Text(
+                    text = "${myNote.answer}",
+                    fontWeight = FontWeight.Normal,
+                    textAlign = TextAlign.Start,
+                    fontFamily = FontFamily.Default,
+                    lineHeight = 20.sp
+                )
+
+            } else {
+                Text(
+                    text = "Tap to expand...",
+                    fontStyle = FontStyle.Italic,
+                    style = MaterialTheme.typography.bodySmall,
+                    fontWeight = FontWeight.ExtraLight
+                )
+            }
+
 
             Row(
                 horizontalArrangement = Arrangement.Center,
-                modifier = Modifier.padding(horizontal = 10.dp)
+                modifier = Modifier.fillMaxWidth()
             )
             {
-                Text(text = "Update",
-                    style = MaterialTheme.typography.bodySmall,
-                    modifier = Modifier.clickable
-                    {
-                        onUpdateClicked(myNote)
+                IconButton(onClick = {
+                    onUpdateClicked(myNote)
+                })
+                {
+                    Icon(
+                        painter = painterResource(id = R.drawable.outline_edit_note_24),
+                        contentDescription = "EDIT NOTE"
+                    )
+                }
+                IconButton(onClick = {
+                    onDeleteClicked(myNote)
+                })
+                {
+                    Icon(
+                        imageVector = Icons.Default.Delete,
+                        contentDescription = "Delete Note",
+                        tint = Color(0xFFb6042a)
+                    )
+                }
 
-                    })
-                Text(text = "Delete",
-                    style = MaterialTheme.typography.bodySmall,
-                    modifier = Modifier.clickable
-                    {
-                        onDeleteClicked(myNote)
-                    })
             }
         }
     }
-
 
 }

@@ -1,117 +1,143 @@
 package com.example.coregpt.util.uiUtil
 
-import androidx.annotation.StringRes
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.background
+import androidx.compose.foundation.border
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.lazy.LazyRow
-import androidx.compose.foundation.lazy.items
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Menu
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.ExposedDropdownMenuBox
+import androidx.compose.material3.ExposedDropdownMenuDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.RadioButton
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.MenuDefaults
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import com.example.coregpt.R
 
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MyTopAppBar(modifier: Modifier = Modifier, screenName: Int, icon: ImageVector = Icons.Default.Menu, color: Color = Color.White){
+fun MyTopAppBar(
+    modifier: Modifier = Modifier,
+    screenName: Int,
+    icon: ImageVector,
+    color: Color,
+    onClick: () -> Unit
+) {
 
     TopAppBar(
         title = {
-            Text(text = stringResource(id = screenName))
+            Text(
+                text = stringResource(id = screenName),
+                fontWeight = FontWeight.Bold,
+                fontFamily = FontFamily.Monospace,
+                color = Color.White,
+                style = MaterialTheme.typography.bodyLarge
+            )
         },
         navigationIcon = {
-            IconButton(onClick = { /*TODO*/ }) {
+            IconButton(
+                onClick = onClick,
+                modifier = Modifier
+                    .padding(horizontal = 10.dp)
+                    .clip(shape = RoundedCornerShape(25.dp))
+                    .background(Color.Gray)
+                    .size(35.dp)
+            ) {
                 Icon(
                     imageVector = icon,
                     contentDescription = "Top App Bar Icon",
-                    tint = Color.Black,
-                    modifier = Modifier.size(35.dp)
+                    tint = Color.White,
                 )
             }
         },
-        modifier = modifier,
-        colors = TopAppBarDefaults.mediumTopAppBarColors(color)
+        colors = TopAppBarDefaults.smallTopAppBarColors(color)
     )
 }
 
 
-/*
-            TopAppBar(
-                title = {
-                    Text(text = stringResource(id = R.string.TopInterviewSceen))
-                },
-                modifier = Modifier.padding(horizontal = 10.dp, vertical = 5.dp),
-                navigationIcon = {
-                    IconButton(
-                        onClick = { /*TODO*/ },
-                        modifier = Modifier
-                            .clip(shape = RoundedCornerShape(25.dp))
-                            .background(Color.Black)
-                    ) {
-                        Icon(
-                            imageVector = Icons.Default.Menu,
-                            contentDescription = "Menu Icon",
-                            tint = Color.White
-                        )
-
-                    }
-
-                },
-                colors = TopAppBarDefaults.mediumTopAppBarColors(Color.Transparent)
-            )
- */
-
-
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun selectCategory(
+fun SelectCategory(
     selectedOption: String,
     onOptionSelected: (String) -> Unit
 ) {
-    val radioOptions = listOf("OS", "DBMS", "OOPS", "CN")
+    val options = listOf("OS", "DBMS", "OOPS", "CN")
 
-    LazyRow {
-        items(radioOptions) { option ->
-            Row(
-                Modifier
-                    .clickable { onOptionSelected(option) },
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                RadioButton(
-                    selected = (option == selectedOption),
-                    onClick = { onOptionSelected(option) }
-                )
-                Text(
-                    text = option
+    var expanded by remember { mutableStateOf(false) }
+
+
+    ExposedDropdownMenuBox(
+        expanded = expanded,
+        onExpandedChange = { expanded = !expanded },
+        modifier = Modifier.padding(top = 10.dp),
+    ) {
+        TextField(
+            modifier = Modifier
+                .menuAnchor()
+                .clip(RoundedCornerShape(10.dp))
+                .border(1.5.dp, Color.Black, RoundedCornerShape(10.dp)),
+            readOnly = true,
+            value = selectedOption,
+            onValueChange = {},
+            label = { Text("Select Subject") },
+            trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded) },
+            colors = ExposedDropdownMenuDefaults.textFieldColors(
+                containerColor = Color(250, 231, 197, 255),
+                focusedLabelColor = Color.Black,
+                unfocusedLabelColor = Color.Black
+            ),
+        )
+        ExposedDropdownMenu(
+            expanded = expanded,
+            onDismissRequest = { expanded = false },
+        ) {
+            options.forEach { selectionOption ->
+                DropdownMenuItem(
+                    text = { Text(selectionOption) },
+                    onClick = {
+                        onOptionSelected(selectionOption)
+                        expanded = false
+                    },
+                    contentPadding = ExposedDropdownMenuDefaults.ItemContentPadding,
+                    colors = MenuDefaults.itemColors(textColor = Color.Gray),
                 )
             }
         }
     }
-
 }
 
 
-@Composable
-fun provideCategory(category: String): String {
-    return when (category) {
-        "OS" -> "Operating System"
-        "DBMS" -> "Database Management System"
-        "OOPS" -> "Object Oriented Programming System"
-        "CN" -> "Computer Networking"
-        else -> ""
-    }
 
-}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

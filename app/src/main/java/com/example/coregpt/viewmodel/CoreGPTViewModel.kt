@@ -55,7 +55,7 @@ class CoreGPTViewModel @Inject constructor(
 
         val msg = listOf<Message>(
             Message(
-                "$text | If you recognize this input, Give Response Short and Less than 100 words Or  just say Sorry! Not Able To Recognize it, Give Correct Input",
+                "$text  give output short and in 100 words",
                 "user"
             )
         )

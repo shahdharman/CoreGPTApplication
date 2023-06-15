@@ -8,7 +8,7 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.example.coregpt.models.homeScreenModel.getHomeScreenList
 import com.example.coregpt.screens.QuestionScreen
-import com.example.coregpt.screens.chatScreen.ChatBotScreen
+import com.example.coregpt.screens.chatBotScreens.ChatBotScreen
 import com.example.coregpt.screens.doubtScreens.DoubtScreen
 import com.example.coregpt.screens.homeScreen.HomeScreen
 import com.example.coregpt.screens.mynotesScreens.MyNotesScreen
@@ -53,27 +53,31 @@ fun StarApp(coreGPTViewModel: CoreGPTViewModel) {
             )
         )
         {backStackEntry->
-            AnswerScreen(ansId = backStackEntry.arguments?.getInt("ansId"))
+            AnswerScreen(ansId = backStackEntry.arguments?.getInt("ansId")){
+                navController.popBackStack()
+            }
         }
 
 //CoreGPT Screen
         composable(route = NavigationScreen.CoreGPT.route){
-            ChatBotScreen(coreGPTViewModel)
+            ChatBotScreen(coreGPTViewModel){
+                navController.popBackStack()
+            }
         }
-
 
 //Note Screen
         composable(route = NavigationScreen.NoteScreen.route)
         {
-            MyNotesScreen(coreGPTViewModel = coreGPTViewModel)
+            MyNotesScreen(coreGPTViewModel = coreGPTViewModel){
+                navController.popBackStack()
+            }
         }
 
 //Doubt Screen
         composable(route = NavigationScreen.DoubtScreen.route)
         {
-            DoubtScreen(coreGPTViewModel = coreGPTViewModel)
+            DoubtScreen(coreGPTViewModel = coreGPTViewModel,navController)
         }
-
 
     }
 }
