@@ -3,7 +3,7 @@ package com.example.coregpt.navigation
 sealed class NavigationScreen(val route : String)
 {
     object HomeScreen : NavigationScreen("home_screen")
-    object SecondScreen: NavigationScreen("second_screen")
+    object SplashScreen: NavigationScreen("splash_screen")
     object TopQnA : NavigationScreen("topQnA")
     object QuestionScreen : NavigationScreen("question_screen")
     object AnswerScreen : NavigationScreen("answer_screen")

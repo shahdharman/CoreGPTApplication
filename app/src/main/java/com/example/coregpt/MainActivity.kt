@@ -3,9 +3,12 @@ package com.example.coregpt
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.ViewModelProvider
 import com.example.coregpt.navigation.StarApp
@@ -19,9 +22,17 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
 
-            val coreViewModel = ViewModelProvider(this).get(CoreGPTViewModel::class.java) // For fragment
+            val coreViewModel =
+                ViewModelProvider(this).get(CoreGPTViewModel::class.java) // For fragment
 
-            StarApp(coreViewModel)
+            Column(
+                verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.CenterHorizontally,
+                modifier = Modifier.fillMaxSize()
+            ) {
+                StarApp(coreViewModel)
+
+            }
         }
     }
 }

@@ -12,6 +12,7 @@ import com.example.coregpt.screens.chatBotScreens.ChatBotScreen
 import com.example.coregpt.screens.doubtScreens.DoubtScreen
 import com.example.coregpt.screens.homeScreen.HomeScreen
 import com.example.coregpt.screens.mynotesScreens.MyNotesScreen
+import com.example.coregpt.screens.splashScreen.SplashScreen
 import com.example.coregpt.screens.topQnAScreens.AnswerScreen
 import com.example.coregpt.screens.topicScreen.TopicScreen
 import com.example.coregpt.viewmodel.CoreGPTViewModel
@@ -20,7 +21,14 @@ import com.example.coregpt.viewmodel.CoreGPTViewModel
 fun StarApp(coreGPTViewModel: CoreGPTViewModel) {
     val navController = rememberNavController()
 
-    NavHost(navController = navController, startDestination = NavigationScreen.HomeScreen.route) {
+    NavHost(navController = navController, startDestination = NavigationScreen.SplashScreen.route) {
+
+//Splash Screen
+
+        composable(route = NavigationScreen.SplashScreen.route){
+            SplashScreen(navController)
+
+        }
 
 //Home Screen
         composable(route = NavigationScreen.HomeScreen.route) {
