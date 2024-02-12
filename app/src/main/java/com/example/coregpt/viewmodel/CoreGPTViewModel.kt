@@ -53,9 +53,9 @@ class CoreGPTViewModel @Inject constructor(
     fun sendMessage(text: String, isUser: Boolean = true) {
         val message = Message(text, "user")
 
-        val msg = listOf<Message>(
+        val sendMsg = listOf<Message>(
             Message(
-                "$text  give output short and in 100 words",
+                "$text || give short and simple reply",
                 "user"
             )
         )
@@ -66,7 +66,7 @@ class CoreGPTViewModel @Inject constructor(
             viewModelScope.launch {
                 try {
                     val response =
-                        networkRepository.generateResponse(OpenAIRequestBody(messages = messages))
+                        networkRepository.generateResponse(OpenAIRequestBody(messages=sendMsg))
                     val generateMessage = response.choices.first().message
                     messages.add(generateMessage)
 

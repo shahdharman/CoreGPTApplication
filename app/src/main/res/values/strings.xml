@@ -54,6 +54,78 @@
     <!--Operating System-->
     <string name="osQues01">What is Operating System and its basic functions?</string>
     <string name="osQues02">What are the different types of Operating System?</string>
+    <string name="osQues03">Difference between Program, Process and Thread.</string>
+    <string name="osQues04">What is difference between Multi-Programming, Multi-Tasking and Multi-Threading?</string>
+    <string name="osQues05">What is Kernel and write its main functions?</string>
+    <string name="osQues06">What are different types of Kernels?</string>
+    <string name="osQues07">Difference between Microkernel and Monolithic kernel.</string>
+    <string name="osQues08">What is Inter Process Communication? What are the different IPC mechanisms?</string>
+    <string name="osQues09">What do you mean by System Calls? Discuss types of System Call?</string>
+    <string name="osQues10">What is bootstrap program in OS?</string>
+    <string name="osQues11">Pending....</string>
+    <string name="osQues12">What is Process and its architecture?</string>
+    <string name="osQues13">What are different states of Process?</string>
+    <string name="osQues14">What is Process Control Block (PCB) and its attributes/fields?</string>
+
+    <!-- OOPS-->
+    <string name="oopsQues01">What is OOPS?</string>
+    <string name="oopsQues02">What is Class and Object?</string>
+    <string name="oopsQues03">What are access specifiers?</string>
+    <string name="oopsQues04">What is the difference between Public, Private and Protected access modifiers?</string>
+    <string name="oopsQues05">What is Encapsulation?</string>
+    <string name="oopsQues06">What is Abstraction?</string>
+    <string name="oopsQues07">What is Inheritance? Discuss the types of Inheritance.</string>
+    <string name="oopsQues08">What are Pure Virtual Functions?</string>
+    <string name="oopsQues09">What is Polymorphism?</string>
+    <string name="oopsQues10">What is Static Data member and Static Function?</string>
+    <string name="oopsQues11">What is a Constructor?</string>
+    <string name="oopsQues12">What is Destructor?</string>
+    <string name="oopsQues13">What is Friend function?</string>
+    <string name="oopsQues14">What is this pointer in C++?</string>
+    <string name="oopsQues15">What are Virtual Functions?</string>
+    <string name="oopsQues16">What is an Abstract Class?</string>
+
+    <!-- Networking -->
+    <string name="cn01">What is Network? Explain different types of network.</string>
+    <string name="cn02">What is Topology? Explain types of topologies.</string>
+    <string name="cn03">What is IPv4 address? What are the different classes of IPv4?</string>
+    <string name="cn04">What is difference between Static IP address and Dynamic IP address?</string>
+    <string name="cn05">What is difference between Public IP address and Private IP address?</string>
+    <string name="cn06">Describe the OSI Reference Model.</string>
+    <string name="cn07">Describe the TCP/IP reference model.</string>
+    <string name="cn08">What are the HTTP and the HTTPS protocol?</string>
+    <string name="cn09">What is the SMTP protocol?</string>
+    <string name="cn10">What is DNS?</string>
+    <string name="cn11">What is the TCP protocol?</string>
+    <string name="cn12">What is the UDP protocol?</string>
+    <string name="cn13">What is the ICMP protocol?</string>
+    <string name="cn14">What do you mean by the DHCP Protocol?</string>
+    <string name="cn15">What are Unicasting, Anycasting, Multicasting and Broadcasting?</string>
+    <string name="cn16">What is the firewall?</string>
+    <string name="cn17">What is the MAC address and how is it related to NIC?</string>
+    <string name="cn18">Differentiate the MAC address with the IP address.</string>
+    <string name="cn19">Compare The Hub vs Switch</string>
+
+
+    <!-- dbms questions names-->
+    <string name="dbms01">What is Database?</string>
+    <string name="dbms02">What is DBMS?</string>
+    <string name="dbms03">What is RDBMS? How is it different from DBMS?</string>
+    <string name="dbms04">What is SQL?</string>
+    <string name="dbms05">What is the difference between SQL and MySQL?</string>
+    <string name="dbms06">What are Constraints in SQL?</string>
+    <string name="dbms07">What is Normalization?</string>
+    <string name="dbms08">What are the various forms of Normalization?</string>
+    <string name="dbms09">What is Functional Dependency?</string>
+    <string name="dbms10">What are the TRUNCATE, DELETE and DROP statements?</string>
+    <string name="dbms11">What are ACID properties?</string>
+
+
+
+
+
+
+
 
 
 

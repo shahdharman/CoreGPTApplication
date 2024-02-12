@@ -1,7 +1,6 @@
 package com.example.coregpt.screens.splashScreen
 
 import android.view.animation.OvershootInterpolator
-import androidx.compose.animation.Animatable
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
@@ -22,7 +21,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.modifier.modifierLocalConsumer
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -31,7 +29,6 @@ import androidx.navigation.NavController
 import com.example.coregpt.R
 import com.example.coregpt.navigation.NavigationScreen
 import kotlinx.coroutines.delay
-
 
 @Composable
 fun SplashScreen(navController: NavController) {
@@ -46,7 +43,7 @@ fun SplashScreen(navController: NavController) {
             animationSpec = tween(durationMillis = 800, easing = {
                 OvershootInterpolator(8f).getInterpolation(it)
             }))
-        delay(2000L)
+        delay(500L)
         navController.navigate(NavigationScreen.HomeScreen.route){
             popUpTo(NavigationScreen.SplashScreen.route){
                 inclusive = true
@@ -68,6 +65,7 @@ fun SplashScreen(navController: NavController) {
     )
     {
         Column(
+
             modifier = Modifier.padding(1.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center

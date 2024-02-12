@@ -58,13 +58,13 @@ fun MyTopAppBar(
                 modifier = Modifier
                     .padding(horizontal = 10.dp)
                     .clip(shape = RoundedCornerShape(25.dp))
-                    .background(Color.Gray)
-                    .size(35.dp)
+                    .background(Color(249, 168, 37, 255))
+                    .size(40.dp)
             ) {
                 Icon(
                     imageVector = icon,
                     contentDescription = "Top App Bar Icon",
-                    tint = Color.White,
+                    tint = Color.Black,
                 )
             }
         },

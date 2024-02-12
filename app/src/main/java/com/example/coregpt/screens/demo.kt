@@ -1,241 +1,190 @@
 package com.example.coregpt.screens
 
-import androidx.compose.foundation.Image
+import android.annotation.SuppressLint
+import android.util.Log
+import androidx.annotation.RawRes
+import androidx.annotation.StringRes
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Send
-import androidx.compose.material.icons.outlined.Send
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
+import androidx.compose.material.icons.filled.Search
+import androidx.compose.material.icons.outlined.Search
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
+import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.painter.Painter
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.coregpt.R
-import java.text.SimpleDateFormat
-import java.util.Calendar
-import java.util.Locale
 
-private val BotChatBubbleShape = RoundedCornerShape(0.dp, 8.dp, 8.dp, 8.dp)
-private val AuthorChatBubbleShape = RoundedCornerShape(8.dp, 0.dp, 8.dp, 8.dp)
-val message = mutableStateOf("")
 
-@Preview
-@Composable
-fun MainScreen() {
-    val context = LocalContext.current
-    Column(
-        modifier = Modifier.fillMaxSize(),
-        verticalArrangement = Arrangement.SpaceBetween
+data class QuesDataModel1(
+
+    @StringRes val question: Int,
+    @RawRes val ansId: Int,
+
     )
-    {
-        TopBarSection(
-            username = "Bot",
-            profile = painterResource(id = R.drawable.bot2),
-            isOnline = true
+
+
+fun osQA(): List<QuesDataModel1> {
+    return listOf(
+        QuesDataModel1(
+            question = R.string.osQues01,
+            ansId = R.raw.os1
+        ),
+        QuesDataModel1(
+            question = R.string.osQues02,
+            ansId = R.raw.os2
+        ),
+        QuesDataModel1(
+            question = R.string.osQues03,
+            ansId = R.raw.os3
+        ),
+        QuesDataModel1(
+            question = R.string.osQues04,
+            ansId = R.raw.os4
+        ),
+        QuesDataModel1(
+            question = R.string.osQues05,
+            ansId = R.raw.os5
+        ),
+        QuesDataModel1(
+            question = R.string.osQues06,
+            ansId = R.raw.os6
+        ),
+        QuesDataModel1(
+            question = R.string.osQues07,
+            ansId = R.raw.os7
+        ),
+        QuesDataModel1(
+            question = R.string.osQues08,
+            ansId = R.raw.os8
+        ),
+        QuesDataModel1(
+            question = R.string.osQues09,
+            ansId = R.raw.os9
         )
-        ChatSection(Modifier.weight(1f))
-        MessageSection()
+    )
 
-    }
-
-
+    /* TODO */
 }
-@Preview
+
+
+
+
 @OptIn(ExperimentalMaterial3Api::class)
+@Preview
 @Composable
-fun MessageSection() {
-    Card(
-        modifier = Modifier
-            .fillMaxWidth(),
-        colors = CardDefaults.cardColors(containerColor = Color.White),
-        elevation = CardDefaults.cardElevation(10.dp)
-    ) {
+fun QuestionScreen1() {
+    val quesList: List<QuesDataModel1> = osQA()
+    var searchText by remember { mutableStateOf("") }
+
+    val filteredList = if (searchText.isNotBlank()) {
+        quesList.filter { ques ->
+            stringResource(ques.question).contains(searchText, ignoreCase = true)
+        }
+    } else {
+        quesList
+    }
+
+    Column(horizontalAlignment = Alignment.CenterHorizontally,modifier = Modifier.background(Color.White).fillMaxSize()) {
         OutlinedTextField(
-            placeholder = {
-                Text(text = "Message...")
-            },
-            value = message.value,
-            onValueChange = { message.value = it },
-            shape = RoundedCornerShape(25.dp),
+            value = searchText,
+            onValueChange = { searchText = it },
+            modifier = Modifier
+                .padding(8.dp)
+                .height(55.dp)
+                .fillMaxWidth(),
+            label = { Text(text = "Search") },
             trailingIcon = {
-                Icon(imageVector = Icons.Outlined.Send,
-                    contentDescription = "Send",
-                    tint = MaterialTheme.colorScheme.primary,
-                    modifier = Modifier.clickable {
-
-                    }
-                )
+                Icon(imageVector = Icons.Outlined.Search, contentDescription ="Search" )
             },
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(10.dp)
+            shape = RoundedCornerShape(25.dp),
+            textStyle = TextStyle(fontSize = 13.sp)
         )
 
-    }
-}
-
-@Composable
-fun TopBarSection(
-    username: String,
-    profile: Painter,
-    isOnline: Boolean
-) {
-    Card(
-        modifier = Modifier
-            .fillMaxSize()
-            .height(60.dp),
-        colors = CardDefaults.cardColors(containerColor = Color(0xFFFAFAFA)),
-        elevation = CardDefaults.cardElevation(4.dp)
-    )
-    {
-        Row(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(horizontal = 8.dp),
-            verticalAlignment = Alignment.CenterVertically
-        )
-        {
-            Image(
-                painter = profile,
-                contentDescription = "profile",
-                modifier = Modifier
-                    .size(42.dp)
-                    .clip(CircleShape)
-            )
-            Spacer(modifier = Modifier.width(8.dp))
-
-            Column()
-            {
-                Text(text = username, fontWeight = FontWeight.SemiBold)
-                Text(text = if (isOnline) "Online" else "Offline", fontSize = 12.sp)
-            }
-        }
-    }
-}
-
-@Composable
-fun ChatSection(modifier: Modifier = Modifier) {
-    val simpleDateFormat = SimpleDateFormat("h:mm a", Locale.ENGLISH)
-    LazyColumn(
-        modifier = modifier
-            .fillMaxSize()
-            .padding(16.dp),
-        reverseLayout = true
-    ) {
-        items(message_dummy) { chat ->
-            MessageItem(
-                messageText = chat.text,
-                time = simpleDateFormat.format(chat.time),
-                isOut = chat.isOut
-            )
-            Spacer(modifier = Modifier.height(8.dp))
-        }
-    }
-}
-
-
-@Composable
-fun MessageItem(
-    messageText: String?,
-    time: String,
-    isOut: Boolean
-) {
-    Column(
-        modifier = Modifier.fillMaxWidth(),
-        horizontalAlignment = if (isOut) Alignment.End else Alignment.Start
-    ) {
-        if (messageText != null) {
-            if (messageText != "") {
-                Box(
-                    modifier = Modifier
-                        .background
-                            (
-                            if (isOut)
-                                MaterialTheme.colorScheme.primary
-                            else Color(0xFF616161),
-                            shape = if (isOut) AuthorChatBubbleShape else BotChatBubbleShape
-                        )
-                        .padding(
-                            top = 8.dp,
-                            bottom = 8.dp,
-                            start = 16.dp,
-                            end = 16.dp
-                        )
-                ) {
-                    Text(text = messageText, color = Color.White)
+        LazyColumn {
+            items(filteredList) { ques ->
+                QuestionItem1(ques = ques) {
+                    // Item click logic here
+                    Log.d("Question", "sdsf")
                 }
             }
         }
-        Text(
-            text = time,
-            fontSize = 12.sp,
-            modifier = Modifier.padding(start = 8.dp)
-        )
     }
 }
 
 
-data class Message(
-    var text: String? = null,
-    var recipient_id: String,
-    val time: Long = Calendar.getInstance().timeInMillis,
-    var isOut: Boolean = false
 
-)
+@Composable
+fun QuestionItem1(
+    ques: QuesDataModel1,
+    modifier: Modifier = Modifier,
+    onQuesClick: (Int) -> Unit
+) {
+    Surface(
+        modifier = modifier
+            .fillMaxWidth()
+            .padding(start = 10.dp, top = 5.dp, bottom = 5.dp, end = 10.dp)
+            .clickable {
+                onQuesClick(ques.ansId)
+            },
+        color = Color(0xfffff0e8),
+        shadowElevation = 2.dp,
+        shape = RoundedCornerShape(5.dp),
+        border = BorderStroke(1.dp, Color.LightGray)
+    ) {
+        Row()
+        {
+            Icon(
+                painter = painterResource(id = R.drawable.outline_arrow_right_24),
+                contentDescription = "icon",
+                modifier = Modifier
+                    .padding(start = 5.dp, top = 10.dp)
+                    .size(20.dp)
+            )
 
-val message_dummy = listOf<Message>(
-    Message(
-        text = "Great",
-        recipient_id = "bot",
-        isOut = false
-    ),
-    Message(
-        text = "I am good",
-        recipient_id = "user",
-        isOut = true
-    ),
-    Message(
-        text = "Hi, How are you",
-        recipient_id = "bot",
-        isOut = false
-    ),
-    Message(
-        text = "hi",
-        recipient_id = "user",
-        isOut = false
-    )
+            Text(
+                text = stringResource(id = ques.question),
+                fontSize = 13.sp,
+                fontWeight = FontWeight.Bold,
+                fontFamily = FontFamily.Monospace,
+                textAlign = TextAlign.Start,
+                lineHeight = 18.sp,
+                modifier = Modifier.padding(10.dp)
+            )
+        }
 
-)
+    }
+}

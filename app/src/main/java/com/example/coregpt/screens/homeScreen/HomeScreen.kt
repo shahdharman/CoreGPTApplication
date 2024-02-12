@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -86,6 +87,7 @@ fun HomeScreen(
             modifier = Modifier
                 .padding(innerPadding)
                 .background(Color.Black)
+                .fillMaxHeight()
         )
         {
 
@@ -132,7 +134,7 @@ fun HomeScreenCard(
     onHomeItemClicked: (Int) -> Unit = {}
 ) {
     Box(modifier = Modifier
-        .height(160.dp)
+        .height(180.dp)
         .padding(start = 10.dp, end = 10.dp, top = 5.dp, bottom = 5.dp)
         .fillMaxWidth()
         .clip(shape = RoundedCornerShape(30.dp))
